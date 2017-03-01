@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NgForm, FormGroup, FormControl } from '@angular/forms';
+import { NgForm, FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Router  } from '@angular/router';
 
@@ -24,17 +24,19 @@ export class ProductEditComponent implements OnInit, OnDestroy {
 
     constructor( private route: ActivatedRoute,
                 private router: Router,
-                private productService: ProductService) {
+                private productService: ProductService,
+                private fb: FormBuilder) {
       
     }
     ngOnInit(): void {
 
-        this.productForm = new FormGroup({
-            productName: new FormControl(),
-            productCode: new FormControl(),
-            starRating: new FormControl(),
-            description: new FormControl()
+        this.productForm = this.fb.group({
+            productName: '',
+            productCode: '',
+            starRating: '',
+            description: '',
         });
+
 
 
         // Read the product Id from the route parameter
