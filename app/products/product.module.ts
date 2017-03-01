@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule} from '@angular/router';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 import { ProductDetailGuard } from './product-guard.service';
 import { ProductListComponent } from './product-list.component';
@@ -20,7 +21,10 @@ import { ProductData }  from './product-data';
 @NgModule({
   imports: [
     SharedModule,
+    CommonModule,
     ProductRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     InMemoryWebApiModule.forRoot(ProductData),
   ],
   declarations: [
