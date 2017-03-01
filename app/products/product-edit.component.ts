@@ -100,10 +100,12 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     }
     
 
-    saveProduct(formProduct: NgForm): void {
-        console.log(formProduct.form);
-        console.log('Saved: ' + JSON.stringify(formProduct.value));
+    saveProduct(): void {
+        console.log(this.productForm);
+        console.log('Saved: ' + JSON.stringify(this.productForm.value));
 
+        this.product = Object.assign({}, this.product, this.productForm.value);
+        
         this.productService.saveProduct(this.product)
             .subscribe(
                 () => this.onSaveComplete(),
