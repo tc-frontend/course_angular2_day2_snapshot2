@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Router  } from '@angular/router';
 
@@ -14,18 +14,29 @@ export class ProductEditComponent implements OnInit, OnDestroy {
  
     pageTitle: string = 'Product Edit';
 
-
     errorMessage: string;
     product: IProduct;
     private sub: Subscription;
 
-    mode: string;
+     mode: string;
+    productForm: FormGroup;
+    isLoading: boolean = false;
+
     constructor( private route: ActivatedRoute,
                 private router: Router,
                 private productService: ProductService) {
       
     }
     ngOnInit(): void {
+
+        this.productForm = new FormGroup({
+            productName: new FormControl(),
+            productCode: new FormControl(),
+            starRating: new FormControl(),
+            description: new FormControl()
+        });
+
+
         // Read the product Id from the route parameter
         this.sub = this.route.params.subscribe(
             params => {
@@ -47,6 +58,13 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     onProductRetrieved(product: IProduct): void {
      
         this.product = product;
+        this.productForm.patchValue({
+            productName: product.productName,
+            productCode: product.productCode,
+            starRating: product.starRating,
+            description: product.description
+        });
+        this.isLoading = false;
 
         if (this.product.id === 0) {
             this.pageTitle = 'Add Product';

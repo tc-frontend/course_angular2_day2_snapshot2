@@ -6,11 +6,11 @@
     <div class="panel-body">
         <form class="form-horizontal"
               novalidate
-              #productForm="ngForm"
+              [formGroup]="productForm"
               (ngSubmit)="saveProduct(productForm)">
             <fieldset>
                 <div class="form-group" 
-                     [ngClass]="{'has-error': (productNameVar.touched || productNameVar.dirty) && !productNameVar.valid }">
+                     [ngClass]="{'has-error': (productForm.get('productName').touched || productForm.get('productName').dirty) && !productForm.get('productName').valid }">
                     <label class="col-md-2 control-label" for="productNameId">Product Name</label>
 
                     <div class="col-md-8">
@@ -21,17 +21,15 @@
                                 required
                                 minlength="3"
                                 maxlength="50"
-                                [(ngModel)]=product.productName
-                                name="productName"
-                                #productNameVar="ngModel"/>
-                        <span class="help-block" *ngIf=" (productNameVar.touched || productNameVar.dirty) && !productNameVar.valid ">
-                                <span *ngIf="productNameVar.errors.required">
+                                formControlName="productName"/>
+                        <span class="help-block" *ngIf=" (productForm.get('productName').touched || productForm.get('productName').dirty) && !productForm.get('productName').valid ">
+                                <span *ngIf="productForm.get('productName').errors.required">
                                      Please enter the product name
                                 </span>
-                                <span *ngIf="productNameVar.errors.minlength">
+                                <span *ngIf="productForm.get('productName').errors.minlength">
                                      The product name must be longer than 3 characters
                                 </span>
-                                <span *ngIf="productNameVar.errors.maxlength">
+                                <span *ngIf="productForm.get('productName').errors.maxlength">
                                       The product name must be less than 50 characters
                                 </span>
                                 
@@ -39,7 +37,7 @@
                     </div>
                 </div>
                  <div class="form-group"
-                     [ngClass]="{'has-error': (productCodeVar.touched || productCodeVar.dirty) && !productCodeVar.valid }">
+                     [ngClass]="{'has-error': (productForm.get('productCode').touched || productForm.get('productCode').dirty) && !productForm.get('productCode').valid }">
                     <label class="col-md-2 control-label" for="productCodeId">Product Code</label>
 
 
@@ -47,13 +45,11 @@
                         <input class="form-control" 
                                 id="productCodeId" 
                                 type="text" 
-                                placeholder="Name (required)"
-                                name="productCode"
                                 required
-                                [(ngModel)]=product.productCode
-                                #productCodeVar="ngModel"/>
-                        <span class="help-block" *ngIf=" (productCodeVar.touched || productCodeVar.dirty) && !productCodeVar.valid ">
-                                <span *ngIf="productCodeVar.errors.required">
+                                placeholder="Name (required)"
+                                formControlName="productCode"/>
+                        <span class="help-block" *ngIf=" (productForm.get('productCode').touched || productForm.get('productCode').dirty) && !productForm.get('productCode').valid ">
+                                <span *ngIf="productForm.get('productCode').errors.required">
                                      Please enter the product code
                                 </span>
                                 
@@ -61,7 +57,7 @@
                     </div>
                 </div>
                  <div class="form-group" 
-                     [ngClass]="{'has-error': (starRatingVar.touched || starRatingVar.dirty) && !starRatingVar.valid }">
+                     [ngClass]="{'has-error': (productForm.get('starRating').touched || productForm.get('starRating').dirty) && !productForm.get('starRating').valid }">
                     <label class="col-md-2 control-label" for="starRatingId">Rating</label>
 
                     <div class="col-md-8">
@@ -69,12 +65,10 @@
                                 id="starRatingId" 
                                 type="text" 
                                 placeholder="Rating"
-                                name="starRating"
-                                pattern="^[1-5]{1,1}(\.[0-9]{0,2})?$"
-                                [(ngModel)]=product.starRating
-                                #starRatingVar="ngModel"/>
-                        <span class="help-block" *ngIf=" (starRatingVar.touched || starRatingVar.dirty) && !starRatingVar.valid ">
-                                <span *ngIf="starRatingVar.errors.pattern">
+                                formControlName="starRating"
+                                pattern="^[1-5]{1,1}(\.[0-9]{0,2})?$"/>
+                        <span class="help-block" *ngIf=" (productForm.get('starRating').touched || productForm.get('starRating').dirty) && !productForm.get('starRating').valid ">
+                                <span *ngIf="productForm.get('starRating').errors.pattern">
                                      The rating name must be between 1 and 5.
                                 </span>
                                 
@@ -89,19 +83,7 @@
                         </button>
                     </div>
                     <div *ngIf="product && product.tags">
-                        <div class="form-group"
-                            *ngFor="let tag of product.tags; let i=index; trackBy:trackByIndex" >
-                            <label class="col-md-2 control-label" [attr.for]="i">Tag {{i + 1}}</label>
-
-                            <div class="col-md-8">
-                                <input class="form-control" 
-                                        [id]="i" 
-                                        type="text" 
-                                        placeholder="Tag" 
-                                        name="{{i}}" 
-                                        [(ngModel)]="product.tags[i]"/>
-                            </div>
-                        </div>
+                        
                     </div>
 
                 </div>
@@ -114,8 +96,7 @@
                                 id="descriptionId" 
                                 placeholder="Description"
                                 rows=3
-                                [(ngModel)]=product.description
-                                name="description"></textarea>
+                                formControlName="description"></textarea>
                     </div>
                 </div>
 
