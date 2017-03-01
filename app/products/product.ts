@@ -9,4 +9,7 @@ export interface IProduct {
     description: string;
     starRating: number;
     imageUrl: string;
+    availability: string;
+    outOfStockReason: string;
+    quantity: number;
 }

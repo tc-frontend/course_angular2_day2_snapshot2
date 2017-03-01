@@ -30,13 +30,16 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     }
     ngOnInit(): void {
 
-        this.productForm = this.fb.group({
+       this.productForm = this.fb.group({
             productName: '',
             productCode: '',
+            confirmProductCode: '',
             starRating: '',
             description: '',
+            availability: 'available',
+            outOfStockReason: '',
+            quantity: 0
         });
-
 
 
         // Read the product Id from the route parameter
@@ -64,7 +67,10 @@ export class ProductEditComponent implements OnInit, OnDestroy {
             productName: product.productName,
             productCode: product.productCode,
             starRating: product.starRating,
-            description: product.description
+            description: product.description,
+            availability: product.availability,
+            outOfStockReason: product.outOfStockReason,
+            quantity: product.quantity
         });
         this.isLoading = false;
 
